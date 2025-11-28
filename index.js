@@ -10,7 +10,6 @@ const setupSwagger = require("./swagger");
 const app = Express();
 const port = process.env.PORT || 3000; 
 
-// ✅ Configuración CORS CORRECTA
 const corsOptions = {
   origin: [
     'http://localhost:3000',
@@ -23,6 +22,11 @@ app.use(cors(corsOptions));
 app.use(Express.json());
 app.use(bodyParser.json());
 
+setupSwagger(app)
+routerApi(app);
+app.use(logErrors);
+app.use(errorHandler);
+
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smartcity-iot')
   .then(() => {
     console.log(' Conectado a MongoDB');
@@ -34,7 +38,6 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smartcity
   const fs = require('fs');
 const path = require('path');
 
-// DEBUG: Verificar estructura de archivos
 console.log(' Verificando estructura...');
 console.log(' Directorio actual:', __dirname);
 
@@ -46,7 +49,6 @@ if (fs.existsSync(routesDir)) {
 } else {
   console.log(' Carpeta routes NO existe - buscando...');
   
-  // Buscar en otras ubicaciones posibles
   const possiblePaths = [
     __dirname,
     path.join(__dirname, 'src'),
@@ -61,10 +63,7 @@ if (fs.existsSync(routesDir)) {
   });
 
 
-setupSwagger(app)
-routerApi(app);
-app.use(logErrors);
-app.use(errorHandler);
+
 
 app.listen(port, () => {
   console.log(" Servidor funcionando en puerto: " + port);
