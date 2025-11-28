@@ -11,6 +11,20 @@ const setupSwagger = require("./swagger");
 const app = Express();
 const port = process.env.PORT || 3000; 
 
+
+const cors = require('cors');
+
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'proyectoservicios-production-bec1.up.railway.app', // ← Tu URL de Railway
+    'proyectoservicios-production-bec1.up.railway.app'
+  ],
+  credentials: true
+};
+
+app.use(cors(corsOptions)); // ← Usa las opciones de CORS
+
 app.use(cors());
 app.use(Express.json());
 app.use(bodyParser.json());

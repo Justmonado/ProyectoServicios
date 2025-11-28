@@ -9,18 +9,20 @@ const swaggerDefinition ={
     description:'Documentación de la API con Swagger',
   },
   servers:[
-    {
-      url:process.env.RAILWAY_URL || 'https://localhost:3000',
-      description:'Servidor de desarrollo'
-    },
-  ],
+  {
+    url: 'https://proyectoservicios-production-bec1.up.railway.app',
+    description: 'Servidor de producción'
+  },
+],
 };
-
-const options ={
+const options = {
   swaggerDefinition,
-  apis:['./routes/*.js'],
+  apis: [
+  './routes/*.js',           
+  './src/routes/*.js',       
+  '**/routes/*.js'           
+],
 };
-
 const swaggerSpec = swaggerJSDoc(options);
 
 function setupSwagger(app){
