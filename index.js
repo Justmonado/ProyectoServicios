@@ -3,29 +3,23 @@ const Express = require("express")
 const routerApi = require('./routes/routes');
 const { logErrors, errorHandler } = require("./Middleware/errorHandler");
 const bodyParser = require("body-parser");
-const cors = require("cors");
+const cors = require("cors"); // ← SOLO UNA VEZ
 const mongoose = require("mongoose");
 const setupSwagger = require("./swagger");
-
 
 const app = Express();
 const port = process.env.PORT || 3000; 
 
-
-const cors = require('cors');
-
+// ✅ Configuración CORS CORRECTA
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'proyectoservicios-production-bec1.up.railway.app', // ← Tu URL de Railway
-    'proyectoservicios-production-bec1.up.railway.app'
+    'https://proyectoservicios-production-4c25.up.railway.app' 
   ],
   credentials: true
 };
 
-app.use(cors(corsOptions)); // ← Usa las opciones de CORS
-
-app.use(cors());
+app.use(cors(corsOptions)); 
 app.use(Express.json());
 app.use(bodyParser.json());
 
@@ -38,12 +32,10 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smartcity
     process.exit(1); 
   });
 
-
 setupSwagger(app)
 routerApi(app);
 app.use(logErrors);
 app.use(errorHandler);
-
 
 app.listen(port, () => {
   console.log(" Servidor funcionando en puerto: " + port);
