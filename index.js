@@ -31,6 +31,35 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smartcity
     console.error(' Error conectando a MongoDB:', error);
     process.exit(1); 
   });
+  const fs = require('fs');
+const path = require('path');
+
+// DEBUG: Verificar estructura de archivos
+console.log(' Verificando estructura...');
+console.log(' Directorio actual:', __dirname);
+
+const routesDir = path.join(__dirname, 'routes');
+if (fs.existsSync(routesDir)) {
+  console.log(' Carpeta routes existe');
+  const files = fs.readdirSync(routesDir);
+  console.log(' Archivos en routes:', files);
+} else {
+  console.log(' Carpeta routes NO existe - buscando...');
+  
+  // Buscar en otras ubicaciones posibles
+  const possiblePaths = [
+    __dirname,
+    path.join(__dirname, 'src'),
+    path.join(__dirname, 'app')
+  ];
+  
+  possiblePaths.forEach(p => {
+    if (fs.existsSync(p)) {
+      const items = fs.readdirSync(p);
+      console.log(` Contenido de ${p}:`, items);
+    }
+  });
+
 
 setupSwagger(app)
 routerApi(app);
@@ -41,3 +70,4 @@ app.listen(port, () => {
   console.log(" Servidor funcionando en puerto: " + port);
   console.log(" Documentación: http://localhost:" + port + "/api-docs");
 });
+}

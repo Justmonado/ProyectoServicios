@@ -18,6 +18,7 @@ const swaggerDefinition ={
 const options = {
   swaggerDefinition,
   apis: [
+  `${__dirname}/routes/*.js`,
   './routes/*.js',           
   './src/routes/*.js',       
   '**/routes/*.js'           
@@ -26,7 +27,12 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 function setupSwagger(app){
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+  console.log(' Swagger buscando en:', options.apis);
+  console.log(' Número de paths encontrados:', swaggerSpec.paths ? Object.keys(swaggerSpec.paths).length : 0);
+  
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
+
+
 
 module.exports = setupSwagger
