@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'https://proyectoservicios-production-4c25.up.railway.app' 
+    'https://proyectoservicios-production-0a9c.up.railway.app' 
   ],
   credentials: true
 };

@@ -10,7 +10,7 @@ const swaggerDefinition ={
   },
   servers:[
   {
-    url: 'https://proyectoservicios-production-bec1.up.railway.app',
+    url: 'https://proyectoservicios-production-0a9c.up.railway.app',
     description: 'Servidor de producción'
   },
 ],
