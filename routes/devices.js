@@ -172,9 +172,9 @@ router.post("/", deviceController.create);
  *                 type: string
  *               model:
  *                 type: string
- *               ownerId:          // ← Agregar si quieres permitir
+ *               ownerId:         
  *                 type: string
- *               zoneId:           // ← Agregar si quieres permitir  
+ *               zoneId:           
  *                 type: string
  *               status:
  *                 type: string

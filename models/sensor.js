@@ -16,7 +16,7 @@ const sensorSchema = new mongoose.Schema({
     required: [true, 'El modelo es requerido']
   },
   location: {
-    type: String, // Formato: "lat,lng"
+    type: String, 
     required: [true, 'La ubicación es requerida'] 
  },
   isActive: {
