@@ -161,7 +161,6 @@ router.post("/", deviceController.create);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID del dispositivo
  *     requestBody:
  *       required: true
  *       content:
@@ -171,14 +170,15 @@ router.post("/", deviceController.create);
  *             properties:
  *               serialNumber:
  *                 type: string
- *                 example: DEV-IND-001-UPDATED
  *               model:
  *                 type: string
- *                 example: Gateway-Industrial-V2
+ *               ownerId:          // ← Agregar si quieres permitir
+ *                 type: string
+ *               zoneId:           // ← Agregar si quieres permitir  
+ *                 type: string
  *               status:
  *                 type: string
  *                 enum: [active, offline, maintenance]
- *                 example: maintenance
  *     responses:
  *       200:
  *         description: Dispositivo actualizado

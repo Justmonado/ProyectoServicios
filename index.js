@@ -3,7 +3,7 @@ const Express = require("express")
 const routerApi = require('./routes/routes');
 const { logErrors, errorHandler } = require("./Middleware/errorHandler");
 const bodyParser = require("body-parser");
-const cors = require("cors"); // ← SOLO UNA VEZ
+const cors = require("cors"); 
 const mongoose = require("mongoose");
 const setupSwagger = require("./swagger");
 
@@ -27,7 +27,7 @@ routerApi(app);
 app.use(logErrors);
 app.use(errorHandler);
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smartcity-iot')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log(' Conectado a MongoDB');
   })
