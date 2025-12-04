@@ -40,18 +40,21 @@ class userService {
         }
         return user;
     }
-    async delete(id){
-        const user = await User.findById(id).select('-password');
-        if(!user){
-            throw new Error('Usuario no encontrado');
-        }
-        const Device = require('../models/device');
-        const userDevices = await Device.findOne({ownerId:id});
-        if(userDevices){
-            throw new Error('No se puede eliminar un usuario con dispositivos asignados');
-        }
-        return await User.findByIdAndDelete(id);
-}
-        
+ async deleteUser(id) {
+    const user = await User.findById(id);
+    if (!user) throw new Error('Usuario no encontrado');
+
+    const Device = require('../models/device');
+    const userDevices = await Device.find({ 
+        ownerId: id,
+        status: { $in: ['active', 'maintenance'] } 
+    });
+    
+    if (userDevices.length > 0) {
+        throw new Error('No se puede eliminar usuario con dispositivos activos');
+    }
+    
+    return await User.findByIdAndDelete(id);
+}     
 }   
 module.exports = new userService();
