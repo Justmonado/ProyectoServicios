@@ -3,6 +3,8 @@ const Sensor = require ('../models/sensor');
 
 
 class readingService{
+
+    
     async getAll(){
         return await Reading.find()
         .populate('sensorId','type model unit location')
@@ -16,20 +18,29 @@ class readingService{
         }
         return reading;
     }
+
+
     async create(readingData){
         const sensor = await Sensor.findById(readingData.sensorId);
         if(!sensor){
             throw new Error('El sensor no existe')
         }
+         if (!sensor.isActive) {  
+        throw new Error('El sensor no está activo');
+    }
         const reading = new Reading(readingData);
         return await  reading.save();
     }
+
+
     async update(id, readingData) {
     if (readingData.sensorId && readingData.sensorId !== undefined) {
-        const Sensor = require('../models/sensor');
         const sensor = await Sensor.findById(readingData.sensorId);
         if (!sensor) {
             throw new Error('El sensor no existe');
+        }
+        if (!sensor.isActive) {  
+            throw new Error('El sensor no está activo');
         }
     }
 
@@ -42,6 +53,8 @@ class readingService{
     if (!reading) throw new Error('Lectura no encontrada');
     return reading;
     }
+
+
     async delete(id){
         const reading = await Reading.findByIdAndDelete(id);
         if(!reading){
