@@ -37,10 +37,10 @@ class sensorService{
         const sensorDevices = await Device.find({ sensors: id });
         const sensorReadings = await Reading.find({ sensorId: id });
         
-        if (sensorDevices || sensorReadings){
+        if (sensorDevices.length > 0  || sensorReadings.length > 0){
             throw new Error ('No se puede eliminar un sensor utilizado')
         }
-        
+
     return await Sensor.findByIdAndDelete(id);
 }
 }
