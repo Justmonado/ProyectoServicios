@@ -40,6 +40,7 @@ class userService {
         }
         return user;
     }
+    
  async delete(id) {
     const user = await User.findById(id);
     if (!user) throw new Error('Usuario no encontrado');
@@ -49,7 +50,7 @@ class userService {
         ownerId: id, 
     });
     
-    if (userDevices) {
+    if (userDevices.length > 0) {
         throw new Error('No se puede eliminar usuario con dispositivos activos');
     }
     
