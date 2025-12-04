@@ -30,18 +30,17 @@ class sensorService{
     const sensor = await Sensor.findById(id);
     if(!sensor) throw new Error('Sensor no encontrado');
 
-    if (sensor.isActive) {
+   
         const Device = require('../models/device');
         const Reading = require('../models/reading');
         
         const sensorDevices = await Device.find({ sensors: id });
         const sensorReadings = await Reading.find({ sensorId: id });
         
-        if (sensorDevices.length > 0 || sensorReadings.length > 0) { 
-            throw new Error('No se puede borrar sensor activo en uso');
+        if (sensorDevices || sensorReadings){
+            throw new Error ('No se puede eliminar un sensor utilizado')
         }
-    }
-    
+        
     return await Sensor.findByIdAndDelete(id);
 }
 }

@@ -95,13 +95,9 @@ class deviceService{
 
    async delete(id){
     const device = await Device.findById(id);
-    if(!device) throw new Error('Dispositivo no encontrado');
-
-    if (device.status === 'active' || device.status === 'maintenance') {
-        if(device.sensors && device.sensors.length > 0){
-            throw new Error('No se puede eliminar dispositivo activo con sensores asignados');
-        }
-    }
+    if(!device){
+       throw new Error('Dispositivo no encontrado'); 
+    } 
     
     return await Device.findByIdAndDelete(id);
 }

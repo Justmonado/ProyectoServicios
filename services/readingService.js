@@ -39,9 +39,10 @@ class readingService{
         if (!sensor) {
             throw new Error('El sensor no existe');
         }
-        if (!sensor.isActive) {  
-            throw new Error('El sensor no está activo');
+        if(!sensor.isActive){
+            throw new Error('El sensor no está activo')
         }
+        
     }
 
     const reading = await Reading.findByIdAndUpdate(

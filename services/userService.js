@@ -46,11 +46,10 @@ class userService {
 
     const Device = require('../models/device');
     const userDevices = await Device.find({ 
-        ownerId: id,
-        status: { $in: ['active', 'maintenance'] } 
+        ownerId: id, 
     });
     
-    if (userDevices.length > 0) {
+    if (userDevices) {
         throw new Error('No se puede eliminar usuario con dispositivos activos');
     }
     

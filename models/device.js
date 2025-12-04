@@ -24,7 +24,8 @@ const deviceSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['active', 'offline', 'maintenance']
+        enum: ['active', 'offline', 'maintenance'],
+        default:'active'
 
     },
    sensors: [{

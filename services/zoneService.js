@@ -32,16 +32,15 @@ class zoneService{
     const zone = await Zone.findById(id);
     if(!zone) throw new Error('Zona no encontrada');
 
-    if (zone.isActive) {
+   
         const zoneDevices = await Device.find({
             zoneId: id,
-            status: { $in: ['active', 'maintenance'] }
         });
         
-        if (zoneDevices.length > 0) {
-            throw new Error('No se puede eliminar zona activa con dispositivos activos');
+        if (zoneDevices) {
+            throw new Error('No se puede eliminar zona con dispositivos activos');
         }
-    }
+
     
     return await Zone.findByIdAndDelete(id);
 }
