@@ -37,7 +37,7 @@ class zoneService{
             zoneId: id,
         });
         
-        if (zoneDevices) {
+        if (zoneDevices.length > 0) {
             throw new Error('No se puede eliminar zona con dispositivos activos');
         }
 
