@@ -40,7 +40,7 @@ class userService {
         }
         return user;
     }
- async deleteUser(id) {
+ async delete(id) {
     const user = await User.findById(id);
     if (!user) throw new Error('Usuario no encontrado');
 

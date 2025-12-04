@@ -26,18 +26,20 @@ class sensorService{
         }
         return sensor;
     }
-    async delete(id){
+   async delete(id){
     const sensor = await Sensor.findById(id);
     if(!sensor) throw new Error('Sensor no encontrado');
 
-    const Device = require('../models/device');
-    const Reading = require('../models/reading');
-    
-    const sensorDevices = await Device.find({ sensors: id });
-    const sensorReadings = await Reading.find({ sensorId: id });
-    
-    if (sensorDevices.length > 0 || sensorReadings.length > 0) { 
-        throw new Error('No se puede borrar sensor en uso');
+    if (sensor.isActive) {
+        const Device = require('../models/device');
+        const Reading = require('../models/reading');
+        
+        const sensorDevices = await Device.find({ sensors: id });
+        const sensorReadings = await Reading.find({ sensorId: id });
+        
+        if (sensorDevices.length > 0 || sensorReadings.length > 0) { 
+            throw new Error('No se puede borrar sensor activo en uso');
+        }
     }
     
     return await Sensor.findByIdAndDelete(id);

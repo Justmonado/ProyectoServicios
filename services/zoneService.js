@@ -29,16 +29,21 @@ class zoneService{
         return zone;
     }
     async delete(id){
-        const zone = await Zone.findById(id);
-        if(!zone){
-            throw new Error('Zona no encontrada')
-        }
-        const zoneDevices = await Device.find({zoneId:id});
-        if(zoneDevices.length > 0){
-            throw new Error('No se puede eliminar la zona porque tiene dispositivos asignados');
-        }
-        return await Zone.findOneAndDelete(id);
+    const zone = await Zone.findById(id);
+    if(!zone) throw new Error('Zona no encontrada');
 
+    if (zone.isActive) {
+        const zoneDevices = await Device.find({
+            zoneId: id,
+            status: { $in: ['active', 'maintenance'] }
+        });
+        
+        if (zoneDevices.length > 0) {
+            throw new Error('No se puede eliminar zona activa con dispositivos activos');
+        }
     }
+    
+    return await Zone.findByIdAndDelete(id);
+}
 }
 module.exports = new zoneService(); 
